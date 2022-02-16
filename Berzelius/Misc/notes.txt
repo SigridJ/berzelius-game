@@ -1,0 +1,4 @@
+Glass dimentions:
+water width = 4/6 of glass width
+water height total = 7/8 of glass height
+glass border width = 8 px
