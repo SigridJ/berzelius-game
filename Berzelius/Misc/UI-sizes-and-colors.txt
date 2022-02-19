@@ -1,0 +1,42 @@
+Waters:
+Green:				2fc40e
+Orange:				ff9b2f
+Light Blue:		14cdff
+Pink:					ff8dd6
+Blue:					0069ff
+Turquoise:		38e9c3
+Dark red:			d7002b
+Purple:				8f00fc
+Yellow:				e0e040
+Dark blue:		0003b4
+Lavender:			aaabff
+Red:					ff5812
+Violet:				ec3ae0
+
+UI:
+Dark blue:		3c517d
+Blue:					447dff
+Turquoise:		00d8b9
+
+Dark alpha: 20%
+Outer margin: 33 px
+Inner margin: 75
+
+Settings:
+Left rigth margin: 110 px
+seperater: 4 px
+Rounded corners: 42 px
+
+Victory:
+Popup: 1026 x 644 px
+Next Level button: 590 x 181 px
+Next Level button border: 15 px
+
+Text:
+Level: 84 px
+Settings: 84 px
+Body: 56 px
+Vectory: 100 px
+
+["2fc40e", "ff9b2f", "14cdff", "ff8dd6", "0069ff", "38e9c3", "d7002b", "8f00fc", "e0e040", "0003b4", "aaabff", "ff5812", "ec3ae0"]
+

@@ -53,13 +53,13 @@ func top():
 	else:
 		return waters[-1]
 
-func add(col: String, size: int):
+func add(col: String, size: int, animation = true):
 	assert(water_level() + size <= maxWaterLevel)
 	if col == top().color:
 		waters[-1].size += size
 	else:
 		waters.append(Water.new(col, size))
-	draw_water(waters[-1])
+	draw_water(waters[-1], animation)
 
 func remove(size: int):
 	assert(not is_empty() and top().size - size >= 0)
@@ -75,7 +75,7 @@ func draw_all():
 	var i = 0
 	for water in waters:
 		surfacePosition += water.size
-		draw_water(water, surfacePosition, i == 0)
+		draw_water(water, false, surfacePosition, i == 0)
 		i += 1
 
 # ----------- Positioning ------------
@@ -90,14 +90,11 @@ func getWaterRect(glassRect):
 func waterSize():
 	return Vector2(waterRect.size.x, waterRect.size.y / maxWaterLevel)
 
-func draw_water(water, surfacePosition = 0, first = true):
+func draw_water(water, animation = false, surfacePosition = 0, first = false):
 	assert(water.size > 0)
 	var pos = maxWaterLevel - water_level()
 	if surfacePosition != 0:
 		pos = maxWaterLevel - surfacePosition
-	print("pos: ", pos)
-	print("waterRect: ", waterRect)
-	print("waterSize(): ", waterSize())
 	if not is_instance_valid(water.node):
 		if is_one_color() or first:
 			water.node = BottomWater.instance()
@@ -114,6 +111,12 @@ func draw_water(water, surfacePosition = 0, first = true):
 		water.node.color = Color(water.color)
 		water.node.position = waterRect.position + Vector2(0, waterSize().y * pos)
 		add_child(water.node)
+		if animation:
+			var tween = get_node("Tween")
+			tween.interpolate_property(water.node, "scale", Vector2(water.node.scale.x, water.node.scale.y * 0.2), water.node.scale, 1)
+			tween.start()
+			tween.interpolate_property(water.node, "position", water.node.position + Vector2(0, water.node.height) * 0.8, water.node.position, 1)
+			tween.start()
 	else:
 		if is_one_color() or first:
 			water.node.height = water.size * waterSize().y
@@ -127,20 +130,21 @@ func draw_water(water, surfacePosition = 0, first = true):
 		water.node.position = waterRect.position + Vector2(0, waterSize().y * pos)
 		water.node.update()
 
+func dimentions():
+	return $EmptyGlass.get_rect().size
 
 # ------------ Animations ------------
 
 func reFocus():
 	focus = true
-	originalPos = self.position
 	var riseTween = get_node("Tween")
-	riseTween.interpolate_property(self, "position", null, originalPos + Vector2(0,-50), 0.5, 3)
+	riseTween.interpolate_property(self, "position", null, originalPos + Vector2(0,-50), 0.3, 3, 2)
 	riseTween.start()
 
 func unFocus():
 	focus = false
 	var riseTween = get_node("Tween")
-	riseTween.interpolate_property(self, "position", null, originalPos, 0.5, 3)
+	riseTween.interpolate_property(self, "position", null, originalPos, 0.3, 3, 2)
 	riseTween.start()
 
 func _on_Glass_input_event(viewport, event, shape_idx):

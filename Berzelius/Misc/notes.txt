@@ -1,4 +1,15 @@
 Glass dimentions:
 water width = 4/6 of glass width
 water height total = 7/8 of glass height
-glass border width = 8 px
+glass border width = 8 px (no longer, doesn't matter)
+
+To-do:
+Level number go up
+ [DONE] Darken screen
+ [DONE] About button and popup
+Animations
+Sound
+Settings working
+Confetti
+Better level generation
+

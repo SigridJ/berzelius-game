@@ -4,7 +4,7 @@
 [ext_resource path="res://Scripts/Glass.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 98.5, 295.5 )
+extents = Vector2( 68.75, 202.25 )
 
 [node name="Glass" type="Area2D"]
 script = ExtResource( 3 )
@@ -15,7 +15,7 @@ texture = ExtResource( 1 )
 centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 101, 293 )
+position = Vector2( 71.25, 199.75 )
 z_index = 1
 shape = SubResource( 1 )
 
