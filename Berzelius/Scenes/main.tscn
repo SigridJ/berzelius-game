@@ -23,7 +23,7 @@
 [ext_resource path="res://Images/info-pressed.png" type="Texture" id=21]
 [ext_resource path="res://Images/info.png" type="Texture" id=22]
 [ext_resource path="res://Scripts/InfoPopup.gd" type="Script" id=23]
-[ext_resource path="res://Scripts/Settings.gd" type="Script" id=24]
+[ext_resource path="res://Scripts/SettingsPopup.gd" type="Script" id=24]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 9 )
@@ -195,7 +195,8 @@ setupMixNumber = 1000
 [node name="PopupLayer" type="CanvasLayer" parent="."]
 layer = 2
 
-[node name="Settings" type="PopupPanel" parent="PopupLayer"]
+[node name="SettingsPopup" type="PopupPanel" parent="PopupLayer"]
+visible = true
 anchor_right = 1.0
 margin_bottom = 584.0
 custom_styles/panel = SubResource( 8 )
@@ -204,7 +205,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PopupLayer/Settings"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PopupLayer/SettingsPopup"]
 margin_right = 1080.0
 margin_bottom = 584.0
 custom_constants/separation = 0
@@ -212,7 +213,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="MarginContainer" parent="PopupLayer/Settings/VBoxContainer"]
+[node name="HBoxContainer" type="MarginContainer" parent="PopupLayer/SettingsPopup/VBoxContainer"]
 margin_right = 1080.0
 margin_bottom = 216.0
 custom_constants/margin_right = 33
@@ -220,7 +221,7 @@ custom_constants/margin_top = 33
 custom_constants/margin_left = 33
 custom_constants/margin_bottom = 33
 
-[node name="Label" type="Label" parent="PopupLayer/Settings/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="PopupLayer/SettingsPopup/VBoxContainer/HBoxContainer"]
 margin_left = 368.0
 margin_top = 50.0
 margin_right = 712.0
@@ -230,7 +231,7 @@ custom_colors/font_color = Color( 0.235294, 0.317647, 0.490196, 1 )
 custom_fonts/font = SubResource( 6 )
 text = "Settings"
 
-[node name="GoBack" type="TextureButton" parent="PopupLayer/Settings/VBoxContainer/HBoxContainer"]
+[node name="GoBack" type="TextureButton" parent="PopupLayer/SettingsPopup/VBoxContainer/HBoxContainer"]
 margin_left = 33.0
 margin_top = 33.0
 margin_right = 183.0
@@ -242,7 +243,7 @@ texture_hover = ExtResource( 16 )
 texture_disabled = ExtResource( 16 )
 texture_focused = ExtResource( 16 )
 
-[node name="MarginContainer" type="MarginContainer" parent="PopupLayer/Settings/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PopupLayer/SettingsPopup/VBoxContainer"]
 margin_top = 216.0
 margin_right = 1080.0
 margin_bottom = 558.0
@@ -251,13 +252,13 @@ custom_constants/margin_top = 0
 custom_constants/margin_left = 110
 custom_constants/margin_bottom = 0
 
-[node name="SettingsList" type="VBoxContainer" parent="PopupLayer/Settings/VBoxContainer/MarginContainer"]
+[node name="SettingsList" type="VBoxContainer" parent="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer"]
 margin_left = 110.0
 margin_right = 970.0
 margin_bottom = 342.0
 custom_constants/separation = 9
 
-[node name="Sound" type="MarginContainer" parent="PopupLayer/Settings/VBoxContainer/MarginContainer/SettingsList"]
+[node name="Sound" type="MarginContainer" parent="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer/SettingsList"]
 margin_right = 860.0
 margin_bottom = 160.0
 rect_min_size = Vector2( 0, 160 )
@@ -266,7 +267,7 @@ custom_constants/margin_top = 0
 custom_constants/margin_left = 0
 custom_constants/margin_bottom = 0
 
-[node name="Name" type="Label" parent="PopupLayer/Settings/VBoxContainer/MarginContainer/SettingsList/Sound"]
+[node name="Name" type="Label" parent="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer/SettingsList/Sound"]
 margin_top = 41.0
 margin_right = 175.0
 margin_bottom = 118.0
@@ -275,7 +276,7 @@ custom_colors/font_color = Color( 0.235294, 0.317647, 0.490196, 1 )
 custom_fonts/font = ExtResource( 11 )
 text = "Sound"
 
-[node name="CheckButton" type="CheckButton" parent="PopupLayer/Settings/VBoxContainer/MarginContainer/SettingsList/Sound"]
+[node name="CheckButton" type="CheckButton" parent="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer/SettingsList/Sound"]
 margin_right = 860.0
 margin_bottom = 160.0
 focus_mode = 0
@@ -285,13 +286,13 @@ custom_icons/on = ExtResource( 18 )
 custom_icons/off_disabled = ExtResource( 18 )
 pressed = true
 
-[node name="HSeparator" type="HSeparator" parent="PopupLayer/Settings/VBoxContainer/MarginContainer/SettingsList"]
+[node name="HSeparator" type="HSeparator" parent="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer/SettingsList"]
 margin_top = 169.0
 margin_right = 860.0
 margin_bottom = 173.0
 custom_styles/separator = SubResource( 7 )
 
-[node name="Animation" type="MarginContainer" parent="PopupLayer/Settings/VBoxContainer/MarginContainer/SettingsList"]
+[node name="Animation" type="MarginContainer" parent="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer/SettingsList"]
 margin_top = 182.0
 margin_right = 860.0
 margin_bottom = 342.0
@@ -301,7 +302,7 @@ custom_constants/margin_top = 0
 custom_constants/margin_left = 0
 custom_constants/margin_bottom = 0
 
-[node name="Name" type="Label" parent="PopupLayer/Settings/VBoxContainer/MarginContainer/SettingsList/Animation"]
+[node name="Name" type="Label" parent="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer/SettingsList/Animation"]
 margin_top = 41.0
 margin_right = 295.0
 margin_bottom = 118.0
@@ -310,7 +311,7 @@ custom_colors/font_color = Color( 0.235294, 0.317647, 0.490196, 1 )
 custom_fonts/font = ExtResource( 11 )
 text = "Animation"
 
-[node name="CheckButton" type="CheckButton" parent="PopupLayer/Settings/VBoxContainer/MarginContainer/SettingsList/Animation"]
+[node name="CheckButton" type="CheckButton" parent="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer/SettingsList/Animation"]
 margin_right = 860.0
 margin_bottom = 160.0
 focus_mode = 0
@@ -320,7 +321,7 @@ custom_icons/on = ExtResource( 18 )
 custom_icons/off_disabled = ExtResource( 18 )
 pressed = true
 
-[node name="Tween" type="Tween" parent="PopupLayer/Settings"]
+[node name="Tween" type="Tween" parent="PopupLayer/SettingsPopup"]
 
 [node name="VictoryPopup" type="PopupPanel" parent="PopupLayer"]
 anchor_left = 0.5
@@ -448,15 +449,18 @@ text = "GitHub."
 [connection signal="button_up" from="UILayer/PanelContainer/MarginContainer/GameButtons/UndoButton" to="GameLayer/GlassList" method="undo"]
 [connection signal="button_up" from="UILayer/PanelContainer/MarginContainer/GameButtons/RestartButton" to="GameLayer/GlassList" method="restart"]
 [connection signal="button_up" from="UILayer/PanelContainer/MarginContainer/InfoButton" to="." method="_on_InfoButton_pressed"]
+[connection signal="lock_me" from="GameLayer/GlassList" to="." method="_on_GlassList_lock_me"]
 [connection signal="victory" from="GameLayer/GlassList" to="." method="_on_GlassList_victory"]
-[connection signal="about_to_show" from="PopupLayer/Settings" to="." method="darken"]
-[connection signal="about_to_show" from="PopupLayer/Settings" to="PopupLayer/Settings" method="_on_Settings_about_to_show"]
-[connection signal="popup_hide" from="PopupLayer/Settings" to="." method="lighten" binds= [ 0.4, 2, 1 ]]
-[connection signal="popup_hide" from="PopupLayer/Settings" to="PopupLayer/Settings" method="_on_Settings_popup_hide"]
-[connection signal="button_up" from="PopupLayer/Settings/VBoxContainer/HBoxContainer/GoBack" to="PopupLayer/Settings" method="_on_GoBack_button_up"]
-[connection signal="about_to_show" from="PopupLayer/VictoryPopup" to="." method="darken" binds= [ 1.0, 6, 1 ]]
+[connection signal="about_to_show" from="PopupLayer/SettingsPopup" to="." method="darken"]
+[connection signal="about_to_show" from="PopupLayer/SettingsPopup" to="PopupLayer/SettingsPopup" method="_on_Settings_about_to_show"]
+[connection signal="popup_hide" from="PopupLayer/SettingsPopup" to="." method="lighten" binds= [ 0.4, 2, 1 ]]
+[connection signal="popup_hide" from="PopupLayer/SettingsPopup" to="PopupLayer/SettingsPopup" method="_on_Settings_popup_hide"]
+[connection signal="button_up" from="PopupLayer/SettingsPopup/VBoxContainer/HBoxContainer/GoBack" to="PopupLayer/SettingsPopup" method="_on_GoBack_button_up"]
+[connection signal="toggled" from="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer/SettingsList/Sound/CheckButton" to="PopupLayer/SettingsPopup" method="_on_sound_toggled"]
+[connection signal="toggled" from="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer/SettingsList/Animation/CheckButton" to="PopupLayer/SettingsPopup" method="_on_animation_toggled"]
+[connection signal="about_to_show" from="PopupLayer/VictoryPopup" to="." method="darken" binds= [ 1.2, 6, 1 ]]
 [connection signal="about_to_show" from="PopupLayer/VictoryPopup" to="PopupLayer/VictoryPopup" method="_on_VictoryPopup_about_to_show"]
-[connection signal="popup_hide" from="PopupLayer/VictoryPopup" to="." method="lighten" binds= [ 1.0, 6, 2 ]]
+[connection signal="popup_hide" from="PopupLayer/VictoryPopup" to="." method="lighten" binds= [ 0.7, 10, 2 ]]
 [connection signal="popup_hide" from="PopupLayer/VictoryPopup" to="PopupLayer/VictoryPopup" method="_on_VictoryPopup_popup_hide"]
 [connection signal="button_up" from="PopupLayer/VictoryPopup/MarginContainer/VBoxContainer/NewGame" to="." method="_on_NewGame_pressed"]
 [connection signal="about_to_show" from="PopupLayer/InfoPopup" to="." method="darken"]

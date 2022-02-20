@@ -4,3 +4,5 @@
 
 [node name="BottomWater" type="Node2D" groups=["water"]]
 script = ExtResource( 1 )
+
+[node name="Tween" type="Tween" parent="."]

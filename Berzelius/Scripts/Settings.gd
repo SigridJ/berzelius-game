@@ -1,20 +1,36 @@
-extends PopupPanel
-
-var originalPos: Vector2
+class Setting:
+	var animation: bool
+	var sound : bool
+	
+	func _init(dictionary: Dictionary):
+		animation = dictionary["Animation"]
+		sound = dictionary["Sound"]
+	
+	func dictionary():
+		return {"Animation": animation, "Sound": sound}
 
 func _ready():
-	originalPos = self.rect_position
+	pass
 
-func _on_Settings_about_to_show():
-	var tween = get_node("Tween")
-	tween.interpolate_property(self, "rect_position", originalPos - Vector2(0, self.rect_size.y), originalPos, 0.4, 2, 1)
-	tween.start()
+func get_settings():
+	var settingsFile = File.new()
+	if not settingsFile.file_exists("user://game.settings"):
+		return Setting.new({"Animation": true, "Sound": false})
+	settingsFile.open("user://game.settings", File.READ)
+	return Setting.new(parse_json(settingsFile.get_line()))
 
-func _on_Settings_popup_hide():
-	self.show()
-	var tween = get_node("Tween")
-	tween.interpolate_property(self, "rect_position", null, originalPos - Vector2(0, self.rect_size.y), 0.4, 2, 1)
-	tween.start()
+func save(settings: Setting):
+	var settingsFile = File.new()
+	settingsFile.open("user://game.settings", File.WRITE)
+	settingsFile.store_line(to_json(settings.dictionary()))
+	settingsFile.close()
 
-func _on_GoBack_button_up():
-	self.hide()
+func set_animation_setting(anim: bool):
+	var setting = get_settings()
+	setting.animation = anim
+	save(setting)
+
+func set_sound_setting(s: bool):
+	var setting = get_settings()
+	setting.sound = s
+	save(setting)

@@ -1,6 +1,7 @@
 extends Area2D
 
 var BottomWater = preload("res://Scenes/BottomWater.tscn")
+var TopWater = preload("res://Scenes/TopWater.tscn")
 var glassBorderWidth = 0
 var maxWaterLevel = 4
 var index: int
@@ -22,7 +23,6 @@ class Water:
 
 func _ready():
 	waterRect = getWaterRect($EmptyGlass.get_rect())
-
 
 # ----------- Water logic ------------
 
@@ -61,14 +61,14 @@ func add(col: String, size: int, animation = true):
 		waters.append(Water.new(col, size))
 	draw_water(waters[-1], animation)
 
-func remove(size: int):
+func remove(size: int, animation = true):
 	assert(not is_empty() and top().size - size >= 0)
 	if top().size == size:
-		waters[-1].node.queue_free()
+		waters[-1].node.delete(animation)
 		waters.pop_back()
 	else:
 		waters[-1].size -= size
-		draw_water(waters[-1])
+		draw_water(waters[-1], animation)
 
 func draw_all():
 	var surfacePosition = 0
@@ -98,55 +98,43 @@ func draw_water(water, animation = false, surfacePosition = 0, first = false):
 	if not is_instance_valid(water.node):
 		if is_one_color() or first:
 			water.node = BottomWater.instance()
-			water.node.width = waterSize().x
-			water.node.height = water.size * waterSize().y
 		else:
-			water.node = Polygon2D.new()
-			water.node.polygon = PoolVector2Array([
-				Vector2(0,0),
-				Vector2(waterSize().x, 0),
-				Vector2(waterSize().x, waterSize().y * water.size),
-				Vector2(0, waterSize().y * water.size)
-			])
-		water.node.color = Color(water.color)
-		water.node.position = waterRect.position + Vector2(0, waterSize().y * pos)
+			water.node = TopWater.instance()
 		add_child(water.node)
-		if animation:
-			var tween = get_node("Tween")
-			tween.interpolate_property(water.node, "scale", Vector2(water.node.scale.x, water.node.scale.y * 0.2), water.node.scale, 1)
-			tween.start()
-			tween.interpolate_property(water.node, "position", water.node.position + Vector2(0, water.node.height) * 0.8, water.node.position, 1)
-			tween.start()
-	else:
-		if is_one_color() or first:
-			water.node.height = water.size * waterSize().y
-		else:
-			water.node.polygon = PoolVector2Array([
-				Vector2(0,0),
-				Vector2(waterSize().x, 0),
-				Vector2(waterSize().x, waterSize().y * water.size),
-				Vector2(0, waterSize().y * water.size)
-			])
-		water.node.position = waterRect.position + Vector2(0, waterSize().y * pos)
-		water.node.update()
+		water.node.connect("delete_me", self, "_delete_water")
+	water.node.position = waterRect.position + Vector2(0, waterSize().y * pos)
+	water.node.redraw(water.size, water.color, animation)
+
+func _delete_water(water):
+	water.queue_free()
 
 func dimentions():
 	return $EmptyGlass.get_rect().size
 
 # ------------ Animations ------------
 
+func stop_water_animation():
+	for water in get_children():
+		if water.is_in_group("water"):
+			if is_instance_valid(water.tween):
+				water.tween.remove_all()
+				if water.remove:
+					_delete_water(water)
+	draw_all()
+
 func reFocus():
 	focus = true
 	var riseTween = get_node("Tween")
-	riseTween.interpolate_property(self, "position", null, originalPos + Vector2(0,-50), 0.3, 3, 2)
+	riseTween.interpolate_property(self, "position", null, originalPos + Vector2(0,-50), 0.2, 3, 1)
 	riseTween.start()
 
 func unFocus():
 	focus = false
 	var riseTween = get_node("Tween")
-	riseTween.interpolate_property(self, "position", null, originalPos, 0.3, 3, 2)
+	riseTween.interpolate_property(self, "position", null, originalPos, 0.2, 3, 1)
 	riseTween.start()
 
 func _on_Glass_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.is_pressed():
+		stop_water_animation()
 		emit_signal("picked", self)

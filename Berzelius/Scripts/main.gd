@@ -29,7 +29,7 @@ func _on_InfoButton_pressed():
 	$PopupLayer/InfoPopup.popup()
 
 func _on_SettingsButton_pressed():
-	$PopupLayer/Settings.popup()
+	$PopupLayer/SettingsPopup.popup()
 
 func darken(time = 0.4, transition = 2, easeType = 1):
 	$UILayer/Lock.show()
@@ -46,3 +46,6 @@ func lighten(time = 0.5, transition = 0, easeType = 1):
 	tween.start()
 	tween.interpolate_property($GameLayer/DarkenLayer, "color", null, Color(1,1,1,1), time, transition, easeType)
 	tween.start()
+
+func _on_GlassList_lock_me():
+	$UILayer/Lock.show()

@@ -4,12 +4,12 @@ water height total = 7/8 of glass height
 glass border width = 8 px (no longer, doesn't matter)
 
 To-do:
-Level number go up
+ [DONE] Level number go up
  [DONE] Darken screen
  [DONE] About button and popup
-Animations
+ [DONE] Animations
 Sound
-Settings working
+ [DONE] Settings working
 Confetti
-Better level generation
+ [DONE] Better level generation
 

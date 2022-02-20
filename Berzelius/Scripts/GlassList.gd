@@ -2,6 +2,7 @@ extends Node
 
 # ----------- Variables ------------
 
+var Settings = load("res://Scripts/Settings.gd").new()
 export (PackedScene) var Glass
 export var setupMixNumber: int
 var maxWaterLevel = 4
@@ -17,8 +18,10 @@ var mixHistory: Array
 var playHistory: Array
 var second = false
 var firstGlass
+var recentPour
 
 signal victory
+signal lock_me
 
 # ----------- Pour Class ------------
 
@@ -76,8 +79,8 @@ func _ready():
 
 func load_game():
 	var saveFile = File.new()
-	if not saveFile.file_exists("user://game.save"):
-#	if true:
+#	if not saveFile.file_exists("user://game.save"):
+	if true:
 		return false
 	saveFile.open("user://game.save", File.READ)
 	var save = parse_json(saveFile.get_line())
@@ -94,9 +97,7 @@ func load_game():
 		glassesAtStart.append(watersAtStart)
 	
 	playHistory = []
-	print(save["playHistory"])
 	for entry in save["playHistory"]:
-		print([entry[0] as int, entry[1] as int, entry[2] as int, entry[3]])
 		playHistory.append([entry[0] as int, entry[1] as int, entry[2] as int, entry[3]])
 	
 	var glassesArray = save["glasses"].duplicate()
@@ -131,7 +132,6 @@ func save_game():
 	saveFile.open("user://game.save", File.WRITE)
 	saveFile.store_line(to_json(save))
 	saveFile.close()
-	print("saved game")
 
 # ----------- Level Generation ------------
 
@@ -144,7 +144,6 @@ func get_level():
 		return 1
 	else:
 		return level
-	
 
 func generate_level(number):
 	level = number
@@ -164,6 +163,7 @@ func generate_level(number):
 
 func generate_level_numbers():
 	maxWaterLevel = (randi() % 3) + 3
+#	maxWaterLevel = 3
 	var levels = [
 		[ 8, 2, 2],
 		[ 9, 1, 2],
@@ -240,9 +240,6 @@ func get_history_index(glass):
 		var index = mixHistory.find_last([i, glass.index, glass.water_level(), glass.top().color])
 		if index != -1:
 			return index
-	print("no index")
-	print(mixHistory)
-	print(glass.index)
 
 func correct_empty_glass_pour(pour: Pour):
 	if pour.b.index >= fullGlassNumber and pour.b.is_one_color():
@@ -337,10 +334,8 @@ func draw_level():
 	var yMiddle = screen_size.y / 2.0
 	var seperation = Vector2(0, 100)
 	var glassSize = glasses[0].dimentions()
-	print(glassSize)
 	if glassSize.x * (glass_number() / rows) > screen_size.x - 2 * 110:
 		glassSize = scale_glasses()
-	print(glassSize)
 	var gameHight = rows * glassSize.y + (rows - 1) * seperation.y
 	var yGame = yMiddle - gameHight / 2.0
 #	var yGame = yMiddle
@@ -365,19 +360,18 @@ func do_player_pour(pour: Pour):
 	if pour.b.water_level() + pour.size > maxWaterLevel:
 		pour.size = maxWaterLevel - pour.b.water_level()
 	playHistory.append(history_entry(pour, pour.color()))
-	glasses[pour.b.index].add(pour.color(), pour.size)
-	glasses[pour.a.index].remove(pour.size)
+	glasses[pour.b.index].add(pour.color(), pour.size, Settings.get_settings().animation)
+	glasses[pour.a.index].remove(pour.size, Settings.get_settings().animation)
 	save_game()
 
 func undo():
-	print(len(playHistory))
 	if len(playHistory) > 0:
 		var b = playHistory[-1][0]
 		var a = playHistory[-1][1]
 		var size = playHistory[-1][2]
 		var pour = Pour.new(glasses[a], glasses[b], size)
 		glasses[b].add(pour.color(), pour.size, false)
-		glasses[a].remove(pour.size)
+		glasses[a].remove(pour.size, false)
 		playHistory.pop_back()
 		save_game()
 
@@ -389,6 +383,10 @@ func is_done():
 	return true
 
 func _on_glass_picked(glass):
+	if recentPour != null:
+		if (glass == recentPour.a or glass == recentPour.b):
+			recentPour.a.stop_water_animation()
+			recentPour.b.stop_water_animation()
 	if not second:
 		second = true
 		firstGlass = glass
@@ -397,7 +395,18 @@ func _on_glass_picked(glass):
 		var pour = Pour.new(firstGlass, glass, firstGlass.top().size)
 		if pour.is_possible_pour() and firstGlass != glass:
 			do_player_pour(pour)
+			recentPour = Pour.new(firstGlass, glass, firstGlass.top().size)
 		firstGlass.unFocus()
 		second = false
 		if is_done():
-			emit_signal("victory")
+			finish_sequence()
+#			emit_signal("victory")
+
+func finish_sequence():
+	emit_signal("lock_me")
+	for glass in glasses:
+		for water in glass.get_children():
+			if is_instance_valid(water) and water.is_in_group("water"):
+				if is_instance_valid(water.tween) and water.tween.is_active():
+					yield(water.tween, "tween_all_completed")
+	emit_signal("victory")
