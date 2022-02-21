@@ -8,7 +8,7 @@ To-do:
  [DONE] Darken screen
  [DONE] About button and popup
  [DONE] Animations
-Sound
+ [DONE] Sound
  [DONE] Settings working
 Confetti
  [DONE] Better level generation

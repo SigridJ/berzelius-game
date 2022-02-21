@@ -1,0 +1,114 @@
+List of the licenses and/or credit for each audio file in this directory
+
+All sounds are found and downloaded from GameSounds.xyz
+
+
+_______________________________________________________________________________
+
+jingles_STEEL10.ogg
+
+###############################################################################
+
+	Short jingles by Kenney Vleugels (www.kenney.nl)
+
+			------------------------------
+
+			        License (CC0)
+	       http://creativecommons.org/publicdomain/zero/1.0/
+
+	You may use these graphics in personal and commercial projects.
+	Credit (Kenney or www.kenney.nl) would be nice but is not mandatory.
+
+###############################################################################
+
+_______________________________________________________________________________
+
+click3.wav
+switch26.wav
+
+ ---
+
+UI SFX set by Kenney Vleugels (www.kenney.nl)
+
+You may use these sounds in personal and commercial projects.
+Credit (www.kenney.nl) would be nice but is not mandatory.
+
+ --
+
+_______________________________________________________________________________
+
+pepSound1.mp3
+pepSound2.mp3
+pepSound3.mp3
+pepSound4.mp3
+
+ ---
+
+Digital SFX set by Kenney Vleugels (www.kenney.nl)
+
+You may use these sounds in personal and commercial projects.
+Credit (www.kenney.nl) would be nice but is not mandatory.
+
+ --
+
+_______________________________________________________________________________
+
+Unfathomed,hydrophone,submerged,bottle,emptying,steady,choppy,light.wav
+
+Sonniss
+timothy@sonniss.com
+https://sonniss.com
+The #GameAudioGDC Bundle Part 5
+Eiravaein Works - Unfathomed
+
+License: Royalty-free, link to license agreement:
+https://gamesounds.xyz/Sonniss.com%20-%20GDC%202019%20-%20Game%20Audio%20Bundle/License.pdf
+
+_______________________________________________________________________________
+
+Elevator Music (loop).mp3
+
+
+THIS PACKAGE IS UNCOPYRIGHTED.
+
+- - -
+
+SHARE IT: 
+    You are not only allowed, but encouraged, to share 
+    this package with all your friends!
+
+REMIX IT:
+    Feel free to modify and build upon this work. 
+    Attribution is nice, but we won't legally mandate it.
+
+PROFIT: 
+    If you can make money off of using this work,
+    that's awesome, and you should. It ain't a zero-sum world.
+
+- - -
+
+Published under the Creative Commons Zero license:
+http://creativecommons.org/publicdomain/zero/1.0/
+
+From The Open Bundle
+http://open.commonly.cc
+
+- - -
+
+This package contains the original soundtracks from:
+1. Adventure Story - http://www.kongregate.com/games/kupo707/adventure-story
+2. Bullet Heaven - http://www.kongregate.com/games/kupo707/bullet-heaven
+3. Epic Battle Fantasy III - http://www.kongregate.com/games/kupo707/epic-battle-fantasy-3
+
+All music is by HalcyonicFalconX, the musician behind the Epic Battle Fantasy series.
+A parody of Final Fantasy classics, EBF brings together all that is great about 
+the old games and various anime sources. She is also making a new High Fantasy 
+retro-style RPG called Kobold Conquest, due to be released sometime next year.
+
+Bandcamp: halcyonicFalconX.bandcamp.com
+Facebook: www.facebook.com/HalcyonicFalconX
+Twitter: @Phyrnna
+
+_______________________________________________________________________________
+
+

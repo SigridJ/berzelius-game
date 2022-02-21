@@ -1,6 +1,7 @@
 extends Node
 
 var Glass = preload("res://Scenes/Glass.tscn")
+var Settings = load("res://Scripts/Settings.gd").new()
 var level = 1
 
 func _ready():

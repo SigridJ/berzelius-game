@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://Scripts/main.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/GlassList.gd" type="Script" id=2]
@@ -24,6 +24,15 @@
 [ext_resource path="res://Images/info.png" type="Texture" id=22]
 [ext_resource path="res://Scripts/InfoPopup.gd" type="Script" id=23]
 [ext_resource path="res://Scripts/SettingsPopup.gd" type="Script" id=24]
+[ext_resource path="res://Sounds/Elevator Music (loop).mp3" type="AudioStream" id=25]
+[ext_resource path="res://Sounds/click3.wav" type="AudioStream" id=26]
+[ext_resource path="res://Scripts/MusicControl.gd" type="Script" id=27]
+[ext_resource path="res://Sounds/switch26.wav" type="AudioStream" id=28]
+[ext_resource path="res://Sounds/jingles_STEEL10.tres" type="AudioStream" id=29]
+[ext_resource path="res://Sounds/pepSound4.tres" type="AudioStream" id=30]
+[ext_resource path="res://Sounds/pepSound1.tres" type="AudioStream" id=32]
+[ext_resource path="res://Sounds/pepSound3.tres" type="AudioStream" id=33]
+[ext_resource path="res://Sounds/Unfathomed,hydrophone,submerged,bottle,emptying,steady,choppy,light.wav" type="AudioStream" id=34]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 9 )
@@ -190,6 +199,22 @@ script = ExtResource( 2 )
 Glass = ExtResource( 3 )
 setupMixNumber = 1000
 
+[node name="GlassUp" type="AudioStreamPlayer" parent="GameLayer/GlassList"]
+stream = ExtResource( 26 )
+volume_db = -6.0
+
+[node name="GlassDown" type="AudioStreamPlayer" parent="GameLayer/GlassList"]
+stream = ExtResource( 32 )
+
+[node name="GlassWrong" type="AudioStreamPlayer" parent="GameLayer/GlassList"]
+stream = ExtResource( 30 )
+
+[node name="Pour" type="AudioStreamPlayer" parent="GameLayer/GlassList"]
+stream = ExtResource( 33 )
+
+[node name="PourStream" type="AudioStreamPlayer" parent="GameLayer/GlassList"]
+stream = ExtResource( 34 )
+
 [node name="DarkenLayer" type="CanvasModulate" parent="GameLayer"]
 
 [node name="PopupLayer" type="CanvasLayer" parent="."]
@@ -198,7 +223,7 @@ layer = 2
 [node name="SettingsPopup" type="PopupPanel" parent="PopupLayer"]
 visible = true
 anchor_right = 1.0
-margin_bottom = 584.0
+margin_bottom = 760.0
 custom_styles/panel = SubResource( 8 )
 script = ExtResource( 24 )
 __meta__ = {
@@ -207,7 +232,7 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PopupLayer/SettingsPopup"]
 margin_right = 1080.0
-margin_bottom = 584.0
+margin_bottom = 760.0
 custom_constants/separation = 0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -246,16 +271,16 @@ texture_focused = ExtResource( 16 )
 [node name="MarginContainer" type="MarginContainer" parent="PopupLayer/SettingsPopup/VBoxContainer"]
 margin_top = 216.0
 margin_right = 1080.0
-margin_bottom = 558.0
+margin_bottom = 760.0
 custom_constants/margin_right = 110
 custom_constants/margin_top = 0
 custom_constants/margin_left = 110
-custom_constants/margin_bottom = 0
+custom_constants/margin_bottom = 20
 
 [node name="SettingsList" type="VBoxContainer" parent="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer"]
 margin_left = 110.0
 margin_right = 970.0
-margin_bottom = 342.0
+margin_bottom = 524.0
 custom_constants/separation = 9
 
 [node name="Sound" type="MarginContainer" parent="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer/SettingsList"]
@@ -292,10 +317,45 @@ margin_right = 860.0
 margin_bottom = 173.0
 custom_styles/separator = SubResource( 7 )
 
-[node name="Animation" type="MarginContainer" parent="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer/SettingsList"]
+[node name="Music" type="MarginContainer" parent="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer/SettingsList"]
 margin_top = 182.0
 margin_right = 860.0
 margin_bottom = 342.0
+rect_min_size = Vector2( 0, 160 )
+custom_constants/margin_right = 0
+custom_constants/margin_top = 0
+custom_constants/margin_left = 0
+custom_constants/margin_bottom = 0
+
+[node name="Name" type="Label" parent="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer/SettingsList/Music"]
+margin_top = 41.0
+margin_right = 164.0
+margin_bottom = 118.0
+size_flags_horizontal = 0
+custom_colors/font_color = Color( 0.235294, 0.317647, 0.490196, 1 )
+custom_fonts/font = ExtResource( 11 )
+text = "Music"
+
+[node name="CheckButton" type="CheckButton" parent="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer/SettingsList/Music"]
+margin_right = 860.0
+margin_bottom = 160.0
+focus_mode = 0
+custom_icons/off = ExtResource( 14 )
+custom_icons/on_disabled = ExtResource( 14 )
+custom_icons/on = ExtResource( 18 )
+custom_icons/off_disabled = ExtResource( 18 )
+pressed = true
+
+[node name="HSeparator2" type="HSeparator" parent="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer/SettingsList"]
+margin_top = 351.0
+margin_right = 860.0
+margin_bottom = 355.0
+custom_styles/separator = SubResource( 7 )
+
+[node name="Animation" type="MarginContainer" parent="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer/SettingsList"]
+margin_top = 364.0
+margin_right = 860.0
+margin_bottom = 524.0
 rect_min_size = Vector2( 0, 160 )
 custom_constants/margin_right = 0
 custom_constants/margin_top = 0
@@ -445,23 +505,51 @@ text = "GitHub."
 
 [node name="Tween" type="Tween" parent="."]
 
+[node name="MusicControl" type="Node" parent="."]
+script = ExtResource( 27 )
+
+[node name="Button" type="AudioStreamPlayer" parent="MusicControl"]
+stream = ExtResource( 26 )
+
+[node name="Music" type="AudioStreamPlayer" parent="MusicControl"]
+stream = ExtResource( 25 )
+volume_db = -6.0
+
+[node name="Checkbutton" type="AudioStreamPlayer" parent="MusicControl"]
+stream = ExtResource( 28 )
+
+[node name="Victory" type="AudioStreamPlayer" parent="MusicControl"]
+stream = ExtResource( 29 )
+
 [connection signal="button_up" from="UILayer/PanelContainer/MarginContainer/SettingsButton" to="." method="_on_SettingsButton_pressed"]
+[connection signal="button_up" from="UILayer/PanelContainer/MarginContainer/SettingsButton" to="MusicControl" method="button_sound"]
 [connection signal="button_up" from="UILayer/PanelContainer/MarginContainer/GameButtons/UndoButton" to="GameLayer/GlassList" method="undo"]
+[connection signal="button_up" from="UILayer/PanelContainer/MarginContainer/GameButtons/UndoButton" to="MusicControl" method="button_sound"]
 [connection signal="button_up" from="UILayer/PanelContainer/MarginContainer/GameButtons/RestartButton" to="GameLayer/GlassList" method="restart"]
+[connection signal="button_up" from="UILayer/PanelContainer/MarginContainer/GameButtons/RestartButton" to="MusicControl" method="button_sound"]
 [connection signal="button_up" from="UILayer/PanelContainer/MarginContainer/InfoButton" to="." method="_on_InfoButton_pressed"]
+[connection signal="button_up" from="UILayer/PanelContainer/MarginContainer/InfoButton" to="MusicControl" method="button_sound"]
 [connection signal="lock_me" from="GameLayer/GlassList" to="." method="_on_GlassList_lock_me"]
 [connection signal="victory" from="GameLayer/GlassList" to="." method="_on_GlassList_victory"]
 [connection signal="about_to_show" from="PopupLayer/SettingsPopup" to="." method="darken"]
 [connection signal="about_to_show" from="PopupLayer/SettingsPopup" to="PopupLayer/SettingsPopup" method="_on_Settings_about_to_show"]
+[connection signal="musicChanged" from="PopupLayer/SettingsPopup" to="MusicControl" method="set_music"]
 [connection signal="popup_hide" from="PopupLayer/SettingsPopup" to="." method="lighten" binds= [ 0.4, 2, 1 ]]
 [connection signal="popup_hide" from="PopupLayer/SettingsPopup" to="PopupLayer/SettingsPopup" method="_on_Settings_popup_hide"]
 [connection signal="button_up" from="PopupLayer/SettingsPopup/VBoxContainer/HBoxContainer/GoBack" to="PopupLayer/SettingsPopup" method="_on_GoBack_button_up"]
+[connection signal="button_up" from="PopupLayer/SettingsPopup/VBoxContainer/HBoxContainer/GoBack" to="MusicControl" method="button_sound"]
+[connection signal="button_up" from="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer/SettingsList/Sound/CheckButton" to="MusicControl" method="checkbutton_sound"]
 [connection signal="toggled" from="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer/SettingsList/Sound/CheckButton" to="PopupLayer/SettingsPopup" method="_on_sound_toggled"]
+[connection signal="button_up" from="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer/SettingsList/Music/CheckButton" to="MusicControl" method="checkbutton_sound"]
+[connection signal="toggled" from="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer/SettingsList/Music/CheckButton" to="PopupLayer/SettingsPopup" method="_on_music_toggled"]
+[connection signal="button_up" from="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer/SettingsList/Animation/CheckButton" to="MusicControl" method="checkbutton_sound"]
 [connection signal="toggled" from="PopupLayer/SettingsPopup/VBoxContainer/MarginContainer/SettingsList/Animation/CheckButton" to="PopupLayer/SettingsPopup" method="_on_animation_toggled"]
 [connection signal="about_to_show" from="PopupLayer/VictoryPopup" to="." method="darken" binds= [ 1.2, 6, 1 ]]
 [connection signal="about_to_show" from="PopupLayer/VictoryPopup" to="PopupLayer/VictoryPopup" method="_on_VictoryPopup_about_to_show"]
+[connection signal="about_to_show" from="PopupLayer/VictoryPopup" to="MusicControl" method="victory_sound"]
 [connection signal="popup_hide" from="PopupLayer/VictoryPopup" to="." method="lighten" binds= [ 0.7, 10, 2 ]]
 [connection signal="popup_hide" from="PopupLayer/VictoryPopup" to="PopupLayer/VictoryPopup" method="_on_VictoryPopup_popup_hide"]
+[connection signal="button_down" from="PopupLayer/VictoryPopup/MarginContainer/VBoxContainer/NewGame" to="MusicControl" method="button_sound"]
 [connection signal="button_up" from="PopupLayer/VictoryPopup/MarginContainer/VBoxContainer/NewGame" to="." method="_on_NewGame_pressed"]
 [connection signal="about_to_show" from="PopupLayer/InfoPopup" to="." method="darken"]
 [connection signal="about_to_show" from="PopupLayer/InfoPopup" to="PopupLayer/InfoPopup" method="_on_InfoPopup_about_to_show"]

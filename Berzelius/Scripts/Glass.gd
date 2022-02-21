@@ -11,6 +11,7 @@ var focus = false
 var originalPos: Vector2
 
 signal picked(origin)
+signal animation_done
 
 class Water:
 	var color: String
@@ -102,11 +103,15 @@ func draw_water(water, animation = false, surfacePosition = 0, first = false):
 			water.node = TopWater.instance()
 		add_child(water.node)
 		water.node.connect("delete_me", self, "_delete_water")
+		water.node.get_node("Tween").connect("tween_all_completed", self, "animation_done")
 	water.node.position = waterRect.position + Vector2(0, waterSize().y * pos)
 	water.node.redraw(water.size, water.color, animation)
 
 func _delete_water(water):
 	water.queue_free()
+
+func animation_done():
+	emit_signal("animation_done")
 
 func dimentions():
 	return $EmptyGlass.get_rect().size

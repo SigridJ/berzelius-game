@@ -79,8 +79,8 @@ func _ready():
 
 func load_game():
 	var saveFile = File.new()
-#	if not saveFile.file_exists("user://game.save"):
-	if true:
+	if not saveFile.file_exists("user://game.save"):
+#	if true:
 		return false
 	saveFile.open("user://game.save", File.READ)
 	var save = parse_json(saveFile.get_line())
@@ -150,6 +150,7 @@ func generate_level(number):
 	generate_level_numbers()
 	print("generate numbers")
 	clearLevel()
+	playHistory = []
 	print("clear level")
 	add_glasses()
 	print("add glasses")
@@ -217,12 +218,14 @@ func add_glasses():
 		add_child(glass)
 		glass.init(maxWaterLevel, colors[i], i)
 		glass.connect("picked", self, "_on_glass_picked")
+		glass.connect("animation_done", self, "stop_sound")
 		glasses.append(glass)
 	for i in range(fullGlassNumber, glass_number()):
 		var glass = Glass.instance()
 		add_child(glass)
 		glass.init(maxWaterLevel, "empty", i)
 		glass.connect("picked", self, "_on_glass_picked")
+		glass.connect("animation_done", self, "stop_sound")
 		glasses.append(glass)
 
 func history_entry(pour: Pour, color):
@@ -387,20 +390,35 @@ func _on_glass_picked(glass):
 		if (glass == recentPour.a or glass == recentPour.b):
 			recentPour.a.stop_water_animation()
 			recentPour.b.stop_water_animation()
+			stop_sound()
 	if not second:
 		second = true
 		firstGlass = glass
 		glass.reFocus()
+		if Settings.get_settings().sound:
+			$GlassUp.play()
 	else:
 		var pour = Pour.new(firstGlass, glass, firstGlass.top().size)
 		if pour.is_possible_pour() and firstGlass != glass:
 			do_player_pour(pour)
 			recentPour = Pour.new(firstGlass, glass, firstGlass.top().size)
+			if Settings.get_settings().sound:
+				if not Settings.get_settings().animation:
+					$Pour.play()
+				else:
+					$PourStream.play(0)
+		elif firstGlass == glass and Settings.get_settings().sound:
+			$GlassDown.play()
+		elif Settings.get_settings().sound:
+			$GlassWrong.play()
 		firstGlass.unFocus()
 		second = false
 		if is_done():
-			finish_sequence()
-#			emit_signal("victory")
+#			finish_sequence()
+			emit_signal("victory")
+
+func stop_sound():
+	$PourStream.stop()
 
 func finish_sequence():
 	emit_signal("lock_me")
